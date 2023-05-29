@@ -9,19 +9,40 @@ export class InfoPaginaService {
   info:infoPagina ={};
   cargada=false;
 
+
+  equipo: any[]= [];
+
+
   constructor( private http:HttpClient ) {
 
-   // console.log('Servicio de infoPagina listo');
-    //Leer el archivo JSON
-    this.http.get('assets/data/data-pagina.json')
-    .subscribe((resp: infoPagina)=>{
+  this.cargarInfo();
+  this.cargarEquipo();
 
-      this.cargada=true;
-      this.info=resp;
-      console.log(resp);
+   }
+
+   private cargarInfo(){
+
+ //Leer el archivo JSON
+ this.http.get('assets/data/data-pagina.json')
+ .subscribe((resp: infoPagina)=>{
+
+
+   this.info=resp;
+
+
+ });
+
+
+   }
+
+   private cargarEquipo(): void{
+    this.http.get('https://agular-html-34b7f-default-rtdb.firebaseio.com/equipo.json')
+    .subscribe( (resp: any)  => {
+
+
+      this.equipo=resp;
+     // console.log(resp);
 
     });
-
-
    }
 }
